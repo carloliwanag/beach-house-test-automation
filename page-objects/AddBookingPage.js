@@ -194,6 +194,17 @@ export class AddBookingPage extends BasePage {
       });
     }
     
+    // Set booking status if provided
+    const status = /** @type {any} */ (bookingData).status;
+    if (status) {
+      const statusSelect = this.page.locator('#status');
+      const isVisible = await statusSelect.isVisible({ timeout: 2000 }).catch(() => false);
+      if (isVisible) {
+        await statusSelect.selectOption(status);
+        console.log(`Set booking status to: ${status}`);
+      }
+    }
+    
     if (roomIds && roomIds.length > 0) {
       // Handle multiple room selection via checkboxes
       for (const roomIdValue of roomIds) {
